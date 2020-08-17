@@ -8,12 +8,12 @@ public class User {
     //two branches - salesmen
     //             - customers
 
-    private String name;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private boolean isAdmin;
-
+    protected String name;
+    protected String password;
+    protected String firstName;
+    protected String lastName;
+    protected boolean isAdmin;
+    protected RentedCar rentedCar;
     public User (String name, String password){
         this.name=name;
         this.password=password;
@@ -67,6 +67,14 @@ public class User {
         public void setAdmin(boolean admin) {
             isAdmin = admin;
         }
+
+    public RentedCar getRentedCar() {
+        return rentedCar;
+    }
+
+    public void setRentedCar(RentedCar rentedCar) {
+        this.rentedCar = rentedCar;
+    }
 
     @Override
 

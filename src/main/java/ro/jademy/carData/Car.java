@@ -6,15 +6,15 @@ import java.util.UUID;
 public class Car {
 
     // TODO: 8/6/2020  : add car properties, constructors, sub-classes
-    private String id;
-    private Make make;
-    private Model model;
-    private LocalDate year;
-    private String fuelType;
-    private long price;
-    private int noOfDoors;
-    private int noOfSeats;
-    private boolean isRented = false;
+    protected String id;
+    protected Make make;
+    protected Model model;
+    protected LocalDate year;
+    protected String fuelType;
+    protected long price;
+    protected int noOfDoors;
+    protected int noOfSeats;
+    protected boolean isRented = false;
 
     public Car(Make make, Model model, LocalDate year, String fuelType, long price, int noOfDoors, int noOfSeats) {
         this.id = UUID.randomUUID().toString();     //Genereaza un id random

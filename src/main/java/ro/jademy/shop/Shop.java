@@ -8,6 +8,7 @@ import ro.jademy.services.MemoryAuthServiceImpl;
 import ro.jademy.userData.*;
 import ro.jademy.carData.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -18,7 +19,7 @@ public class Shop {
     private List<Car> cars;
     private List<User> users;    //aici poate fi orice, de la clienti, la admini
 
-    private User currentUser;
+    private User currentUser;    // TODO: 8/17/2020  currentUer devine null la logout
 
     private AuthService authService = new MemoryAuthServiceImpl();
     private FilterService filterService = new FilterServiceImpl();
@@ -29,11 +30,9 @@ public class Shop {
         this.users = users;
     }
 
-    //login method
 
 
     public void login() {
-        //deja am lista de useri declarata ca si proprietate
         do {
             System.out.println("Enter username: ");
             String username = sc.next();
@@ -53,6 +52,14 @@ public class Shop {
             showAdminMenu();
         } else {
             showClientMenu();
+        }
+    }
+
+    public void logout(){
+        System.out.println("Are you sure you want to logout? Y");
+        String option=sc.next();
+        if(option.equalsIgnoreCase("Y")){
+            currentUser=null;
         }
     }
 
@@ -82,9 +89,10 @@ public class Shop {
         System.out.println("1. List all cars");
         System.out.println("2. List available cars");
         System.out.println("3. Filter cars");
-        System.out.println("4. Show car history");
-        System.out.println("5. Logout");
-        System.out.println("6. Exit");
+        System.out.println("4. Rent a car");
+        System.out.println("5. Show car history");
+        System.out.println("6. Logout");
+        System.out.println("7. Exit");
     }
 
     public void showCarFilterOptions() {
@@ -101,36 +109,38 @@ public class Shop {
 
     }
 
-public void chooseCarFilterOption(int option){
+    public void chooseCarFilterOption(int option) {
         int option2;
-        switch(option){
+        switch (option) {
             case 1:
                 System.out.println("1. Add another filter");
                 System.out.println("2. Display cars");
-                 option2=sc.nextInt();
-                switch (option2){
-                    case 1: showCarFilterOptions();
-                    break;
+                option2 = sc.nextInt();
+                switch (option2) {
+                    case 1:
+                        showCarFilterOptions();
+                        break;
                     case 2:
                         showAllCars();
                         System.out.println("Enter a make:");
-                        String make=sc.next();
-                        showAllCars(filterService.filterByMake(cars,make));
+                        String make = sc.next();
+                        showAllCars(filterService.filterByMake(cars, make));
                         break;
                 }
-               break;
+                break;
             case 2:
                 System.out.println("1. Add another filter");
                 System.out.println("2. Display cars");
-                 option2=sc.nextInt();
-                switch (option2){
-                    case 1: showCarFilterOptions();
+                option2 = sc.nextInt();
+                switch (option2) {
+                    case 1:
+                        showCarFilterOptions();
                         break;
                     case 2:
                         showAllCars();
                         System.out.println("Enter a model:");
-                        String model=sc.next();
-                        showAllCars(filterService.filterByModel(cars,model));
+                        String model = sc.next();
+                        showAllCars(filterService.filterByModel(cars, model));
                         break;
                 }
                 break;
@@ -138,89 +148,95 @@ public void chooseCarFilterOption(int option){
             case 3:
                 System.out.println("1. Add another filter");
                 System.out.println("2. Display cars");
-                 option2=sc.nextInt();
-                switch (option2){
-                    case 1: showCarFilterOptions();
+                option2 = sc.nextInt();
+                switch (option2) {
+                    case 1:
+                        showCarFilterOptions();
                         break;
                     case 2:
                         showAllCars();
                         System.out.println("Enter boundary years:");
                         System.out.println("First year");
-                        int minYear=sc.nextInt();
+                        int minYear = sc.nextInt();
                         System.out.println("Second year");
-                        int maxYear=sc.nextInt();
-                        showAllCars(filterService.filterByYears(cars,minYear, maxYear));
+                        int maxYear = sc.nextInt();
+                        showAllCars(filterService.filterByYears(cars, minYear, maxYear));
                         break;
                 }
                 break;
             case 4:
                 System.out.println("1. Add another filter");
                 System.out.println("2. Display cars");
-                option2=sc.nextInt();
-                switch (option2){
-                    case 1: showCarFilterOptions();
+                option2 = sc.nextInt();
+                switch (option2) {
+                    case 1:
+                        showCarFilterOptions();
                         break;
                     case 2:
                         showAllCars();
                         System.out.println("Enter a fuel type:");
-                        String fuelType=sc.next();
-                        showAllCars(filterService.filterByModel(cars,fuelType));
+                        String fuelType = sc.next();
+                        showAllCars(filterService.filterByModel(cars, fuelType));
                         break;
                 }
                 break;
             case 5:
                 System.out.println("1. Add another filter");
                 System.out.println("2. Display cars");
-                option2=sc.nextInt();
-                switch (option2){
-                    case 1: showCarFilterOptions();
+                option2 = sc.nextInt();
+                switch (option2) {
+                    case 1:
+                        showCarFilterOptions();
                         break;
                     case 2:
                         showAllCars();
                         System.out.println("Enter boundary prices:");
                         System.out.println("Minimum price");
-                        int minYear=sc.nextInt();
+                        int minYear = sc.nextInt();
                         System.out.println("Second year");
-                        int maxYear=sc.nextInt();
-                        showAllCars(filterService.filterByPrice(cars,minYear, maxYear));
+                        int maxYear = sc.nextInt();
+                        showAllCars(filterService.filterByPrice(cars, minYear, maxYear));
                         break;
                 }
                 break;
             case 6:
                 System.out.println("1. Add another filter");
                 System.out.println("2. Display cars");
-                option2=sc.nextInt();
-                switch (option2){
-                    case 1: showCarFilterOptions();
+                option2 = sc.nextInt();
+                switch (option2) {
+                    case 1:
+                        showCarFilterOptions();
                         break;
                     case 2:
                         showAllCars();
                         System.out.println("Enter the number of doors:");
-                        int noOfDoors=sc.nextInt();
-                        showAllCars(filterService.filterByNoOfDoors(cars,noOfDoors));
+                        int noOfDoors = sc.nextInt();
+                        showAllCars(filterService.filterByNoOfDoors(cars, noOfDoors));
                         break;
                 }
                 break;
             case 7:
                 System.out.println("1. Add another filter");
                 System.out.println("2. Display cars");
-                option2=sc.nextInt();
-                switch (option2){
-                    case 1: showCarFilterOptions();
+                option2 = sc.nextInt();
+                switch (option2) {
+                    case 1:
+                        showCarFilterOptions();
                         break;
                     case 2:
                         showAllCars();
                         System.out.println("Enter the number of seats:");
-                        int noOfSeats=sc.nextInt();
-                        showAllCars(filterService.filterByNoOfDoors(cars,noOfSeats));
+                        int noOfSeats = sc.nextInt();
+                        showAllCars(filterService.filterByNoOfDoors(cars, noOfSeats));
                         break;
                 }
                 break;
-            case 8:showClientMenu();
+            case 8:
+                showClientMenu();
             default:
                 System.out.println("Enter a valid option");
         }
-}
+    }
 
     public void chooseAdminMenuOption(int option) {
         switch (option) {
@@ -239,16 +255,14 @@ public void chooseCarFilterOption(int option){
                 // TODO: 8/12/2020 list car history
 
 
-
-
                 break;
             case 5:
                 // TODO: 8/12/2020 check income
                 break;
             case 6:
                 System.out.println("Enter a car ID:");
-                String id=sc.next();
-                showAllCars(filterService.filterById(cars,id));
+                String id = sc.next();
+                showAllCars(filterService.filterById(cars, id));
                 break;
             case 7:
                 // TODO: 8/12/2020 search in "users"
@@ -279,25 +293,30 @@ public void chooseCarFilterOption(int option){
             case 3:
                 showCarFilterOptions();
                 System.out.println("Enter an option:");
-                int filteringOption=sc.nextInt();
+                int filteringOption = sc.nextInt();
                 chooseCarFilterOption(filteringOption);
+                // TODO: 8/17/2020     rentCar();
                 break;
             case 4:
+                // TODO: 8/17/2020  rentCar();
+                break;
+            case 5:
                 // TODO: 8/16/2020 show car history
                 //the rented car list is in the client class---->do I need to declare the client list as a property of this class?
 
                 break;
 
-            case 5:
+            case 6:
                 // TODO: 8/16/2020 logout ;
 
-            case 6:
+            case 7:
                 // TODO: 8/16/2020 exit;
             default:
                 System.out.println("Unknown command");
                 break;
         }
     }
+
     public void showAllCars() {    //metoda care printeaza masini
         showAllCars(cars);
     }
@@ -315,7 +334,7 @@ public void chooseCarFilterOption(int option){
         }
     }
 
-    public void showAllUsers(List<User> users){
+    public void showAllUsers(List<User> users) {
         for (int i = 0; i < users.size(); i++) {
             if (i < 10) {
                 System.out.println((i + 1) + ".  " + users.get(i).toString());
@@ -326,8 +345,17 @@ public void chooseCarFilterOption(int option){
     }
 
 
-
-
+    private List<RentedCar> getCurrentlyRentedCars() {
+        List<RentedCar> rentedCars = new ArrayList<>();
+        for (User user : users) {
+            //      rentedCars.addAll(user.getCurrentlyRentedCars())
+            RentedCar currentCar = user.getRentedCar();
+            if (currentCar != null) {
+                rentedCars.add(currentCar);
+            }
+        }
+        return rentedCars;
+    }
 
 
     public List<Car> getCars() {
